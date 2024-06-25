@@ -14,12 +14,14 @@ class InputOTPGroupNormal extends StatefulWidget {
     this.line = 2.0,
     this.lineColor,
     required this.textStyle,
+    this.onTap,
   });
   final double line;
   final Color? lineColor;
   final TextStyle textStyle;
   final InputOTPLength length;
   final FutureOr<void> Function(String) onChanged;
+  final void Function()? onTap;
 
   @override
   State<InputOTPGroupNormal> createState() => _InputOTPGroupNormalState();
@@ -59,7 +61,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _focusNode.requestFocus(),
+      onTap: () { 
+        widget.onTap?.call();
+        _focusNode.requestFocus();
+      },
       child: StatefulBuilder(
         builder: (context, setState) {
           return LayoutBuilder(
@@ -84,7 +89,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                         lineColor: widget.lineColor,
                         selected: _fieldInput.text.isEmpty,
                         value: _getValueOfIndex(0),
-                        onClicked: () => _focusNode.requestFocus(),
+                        onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                       ),
                       const SizedBox(
                         width: spacing,
@@ -96,7 +104,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                         lineColor: widget.lineColor,
                         selected: _fieldInput.text.length == 1,
                         value: _getValueOfIndex(1),
-                        onClicked: () => _focusNode.requestFocus(),
+                        onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                       ),
                       const SizedBox(
                         width: spacing,
@@ -108,7 +119,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                         lineColor: widget.lineColor,
                         selected: _fieldInput.text.length == 2,
                         value: _getValueOfIndex(2),
-                        onClicked: () => _focusNode.requestFocus(),
+                        onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                       ),
                       const SizedBox(
                         width: spacing,
@@ -120,7 +134,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                         lineColor: widget.lineColor,
                         selected: _fieldInput.text.length == 3,
                         value: _getValueOfIndex(3),
-                        onClicked: () => _focusNode.requestFocus(),
+                        onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                       ),
                       if (widget.length == InputOTPLength.six || widget.length == InputOTPLength.eight) ...[
                         const SizedBox(
@@ -133,7 +150,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                           lineColor: widget.lineColor,
                           selected: _fieldInput.text.length == 4,
                           value: _getValueOfIndex(4),
-                          onClicked: () => _focusNode.requestFocus(),
+                          onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                         ),
                       ],
                       if (widget.length == InputOTPLength.six || widget.length == InputOTPLength.eight) ...[
@@ -147,7 +167,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                           lineColor: widget.lineColor,
                           selected: _fieldInput.text.length == 5,
                           value: _getValueOfIndex(5),
-                          onClicked: () => _focusNode.requestFocus(),
+                          onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                         ),
                       ],
                       if (widget.length == InputOTPLength.eight) ...[
@@ -161,7 +184,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                           lineColor: widget.lineColor,
                           selected: _fieldInput.text.length == 6,
                           value: _getValueOfIndex(6),
-                          onClicked: () => _focusNode.requestFocus(),
+                          onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                         ),
                       ],
                       if (widget.length == InputOTPLength.eight) ...[
@@ -175,7 +201,10 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                           lineColor: widget.lineColor,
                           selected: _fieldInput.text.length == 7,
                           value: _getValueOfIndex(7),
-                          onClicked: () => _focusNode.requestFocus(),
+                          onClicked: () { 
+                          widget.onTap?.call();
+                          _focusNode.requestFocus();
+                        },
                         ),
                       ],
                     ],
@@ -192,6 +221,7 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
                         focusNode: _focusNode,
                         keyboardType: TextInputType.number,
                         controller: _fieldInput,
+                        onTap: widget.onTap,
                         onChanged: (value) {
                           _otp = _fieldInput.text;
                           if (_otp.length ==

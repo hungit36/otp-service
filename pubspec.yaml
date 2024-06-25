@@ -1,6 +1,6 @@
 name: otp_service
 description: The OTP Service to help your performance.
-version: 0.0.6
+version: 0.0.8
 homepage: https://github.com/hungit36/otp-service
 
 environment:

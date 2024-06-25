@@ -11,6 +11,7 @@ class OTPWidgetService extends StatefulWidget {
     this.errorTextStyle,
     required this.onChanged,
     this.length = InputOTPLength.six,
+    this.onTap,
   });
   final InputOTPLength length;
   final TextStyle textStyle;
@@ -19,6 +20,7 @@ class OTPWidgetService extends StatefulWidget {
   final String errorString;
   final TextStyle? errorTextStyle;
   final void Function(String) onChanged;
+  final void Function()? onTap;
 
   @override
   State<OTPWidgetService> createState() => _WidgetState();
@@ -54,6 +56,7 @@ class _WidgetState extends State<OTPWidgetService> with SingleTickerProviderStat
         length: widget.length,
         lineColor: widget.lineColor,
         textStyle: widget.textStyle,
+        onTap: widget.onTap,
         onChanged: (otp) {
           resetError();
           widget.onChanged(otp);

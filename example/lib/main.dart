@@ -72,6 +72,9 @@ class _MyAppState extends State<MyApp> {
                         errorString: _error,
                         errorTextStyle: TextStyle(color: Colors.red[300]),
                         lineColor: Colors.black26,
+                        onTap: () {
+                          debugPrint('onTap');
+                        },
                         onChanged: (otp) {
                           _otp = otp;
                           debugPrint('OTP: $otp');
