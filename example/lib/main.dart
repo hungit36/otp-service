@@ -58,68 +58,74 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('OTP example'),
-        ),
-        body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      OTPWidgetService( 
-                        errorString: _error,
-                        errorTextStyle: TextStyle(color: Colors.red[300]),
-                        lineColor: Colors.black26,
-                        onTap: () {
-                          debugPrint('onTap');
-                        },
-                        onChanged: (otp) {
-                          _otp = otp;
-                          debugPrint('OTP: $otp');
+      home: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('OTP example'),
+          ),
+          body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        OTPWidgetService( 
+                          onKeyboard: (isShow) {
+                            debugPrint('onKeyboard: $isShow');
+                          },
+                          errorString: _error,
+                          errorTextStyle: TextStyle(color: Colors.red[300]),
+                          lineColor: Colors.black26,
+                          onTap: () {
+                            debugPrint('onTap');
+                          },
+                          onChanged: (otp) {
+                            _otp = otp;
+                            debugPrint('OTP: $otp');
+                            setState(() {
+                              _error = '';
+                            });
+                          }, 
+                          textStyle: TextStyle(color: Colors.black, fontSize: 36),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton(onPressed: (){
                           setState(() {
-                            _error = '';
+                            _error = _otp.isEmpty ? 'This is require.' : _otp.length < 6 ? 'The otp not validate.' : '';
                           });
                         }, 
-                        textStyle: TextStyle(color: Colors.black, fontSize: 36),
-                      ),
-                      const SizedBox(height: 16),
-                      OutlinedButton(onPressed: (){
-                        setState(() {
-                          _error = _otp.isEmpty ? 'This is require.' : _otp.length < 6 ? 'The otp not validate.' : '';
-                        });
-                      }, 
-                        child: Text("Verify Now")),
-                      const SizedBox(height: 16),
-                      if (_countTime > 0)
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: _isLimited
-                                      ? 'Resend limit reached. You can try again by resending the code in 24 hours ('
-                                      : 'You can resend the code again in ',
-                                  style: TextStyle(color: Colors.black)),
-                              TextSpan(
-                                  text: _isLimited ? formatOTPTime : formatOTPTimeNotHour,
-                                  style: TextStyle(color: Colors.black26)),
-                              TextSpan(
-                                  text: _isLimited ? ')s' : 's',
-                                  style: TextStyle(color: Colors.black)),
-                            ],
-                          ),
-                        )
-                      else
-                        OutlinedButton(onPressed: (){
-                          _countTime = 60;
-                            _startTimer();
-                        }, child: Text("Resent code")),
-                      const SizedBox(height: 16),
-                    ],
+                          child: Text("Verify Now")),
+                        const SizedBox(height: 16),
+                        if (_countTime > 0)
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: _isLimited
+                                        ? 'Resend limit reached. You can try again by resending the code in 24 hours ('
+                                        : 'You can resend the code again in ',
+                                    style: TextStyle(color: Colors.black)),
+                                TextSpan(
+                                    text: _isLimited ? formatOTPTime : formatOTPTimeNotHour,
+                                    style: TextStyle(color: Colors.black26)),
+                                TextSpan(
+                                    text: _isLimited ? ')s' : 's',
+                                    style: TextStyle(color: Colors.black)),
+                              ],
+                            ),
+                          )
+                        else
+                          OutlinedButton(onPressed: (){
+                            _countTime = 60;
+                              _startTimer();
+                          }, child: Text("Resent code")),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

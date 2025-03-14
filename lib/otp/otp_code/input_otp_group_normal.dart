@@ -15,13 +15,17 @@ class InputOTPGroupNormal extends StatefulWidget {
     this.lineColor,
     required this.textStyle,
     this.onTap,
+    this.onKeyboard,
+    this.value = '',
   });
+  final String value;
   final double line;
   final Color? lineColor;
   final TextStyle textStyle;
   final InputOTPLength length;
   final FutureOr<void> Function(String) onChanged;
   final void Function()? onTap;
+  final void Function(bool isShow)? onKeyboard;
 
   @override
   State<InputOTPGroupNormal> createState() => _InputOTPGroupNormalState();
@@ -34,10 +38,14 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
 
   final _focusNode = FocusNode();
 
+  
+
   late AppLifecycleListener _lifecycleListener;
 
   @override
   void initState() {
+    _otp = widget.value;
+    _fieldInput.text = _otp;
     super.initState();
     _lifecycleListener = AppLifecycleListener(
       onStateChange: (state) {},
@@ -47,6 +55,19 @@ class _InputOTPGroupNormalState extends State<InputOTPGroupNormal> {
         });
       },
     );
+    _focusNode.addListener((){
+      widget.onKeyboard?.call(_focusNode.hasFocus);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant InputOTPGroupNormal oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _otp = widget.value;
+    _fieldInput.text = _otp;
+    setState(() {
+      
+    });
   }
 
   @override
